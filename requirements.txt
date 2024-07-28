@@ -4,4 +4,4 @@ openai
 tiktoken
 langchain-openai
 langchain_community
-
+PyPDF2
