@@ -12,8 +12,9 @@ from langchain_community.document_loaders import PyPDFLoader
 #from langchain import OpenAI, PromptTemplate
 import glob
 
-llm = OpenAI(temperature=0.2)
+
 def summarize_pdfs_from_folder(pdfs_folder):
+    llm = OpenAI(temperature=0.2, openai_api_key=openai_api_key) 
     summaries = []
     for pdf_file in glob.glob(pdfs_folder + "/*.pdf"):
         loader = PyPDFLoader(pdf_file)
