@@ -9,24 +9,27 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain.chains.summarize import load_summarize_chain
 #from langchain.document_loaders import PyPDFLoader
 from langchain_community.document_loaders import PyPDFLoader
+import PyPDF2
 #from langchain import OpenAI, PromptTemplate
 import glob
 
 
-def summarize_pdfs_from_folder(pdfs_folder):
+def summarize_pdfs_from_folder(pdf_file):
     llm = OpenAI(temperature=0.2, openai_api_key=openai_api_key) 
-    summaries = []
-    for pdf_file in glob.glob(pdfs_folder + "/*.pdf"):
-        loader = PyPDFLoader(pdf_file)
-        docs = loader.load_and_split()
-        chain = load_summarize_chain(llm, chain_type="map_reduce")
-        summary = chain.run(docs)
-        print("Summary for: ", pdf_file)
-        print(summary)
-        print("\n")
-        summaries.append(summary)
-
-    return summaries
+    #summaries = []
+    #for pdf_file in pdfs_folder:
+    #for pdf_file in glob.glob(pdfs_folder + "/*.pdf"):
+        
+    loader = PyPDFLoader(pdf_file)
+    docs = loader.load_and_split()
+    chain = load_summarize_chain(llm, chain_type="map_reduce")
+    summary = chain.run(docs)
+    print("Summary for: ", pdf_file)
+    print(summary)
+        #print("\n")
+        #summaries.append(summary)
+    return summary
+    #return summaries
 
 
 def custom_summary(pdf_folder, custom_prompt):
@@ -64,8 +67,20 @@ st.set_page_config(page_title='🦜🔗 Text Summarization App')
 st.title('🦜🔗 Text Summarization App')
 
 # Text input
-#txt_input = st.text_area('Enter your text', '', height=200)
-txt_input = st.text_area('Enter your pdf folder path', '', height=200)
+txt_input = st.text_area('upload your pdf file', '', height=200)
+uploaded_file = st.file_uploader(
+    txt_input, type="pdf")#, accept_multiple_files=True)
+#for uploaded_file in uploaded_files:
+if uploaded_file is not None:
+    # Read the PDF file
+    pdf_reader = PyPDF2.PdfFileReader(uploaded_file)
+    # Extract the content
+    content = ""
+    for page in range(pdf_reader.getNumPages()):
+        content += pdf_reader.getPage(page).extractText()
+    # Display the content
+    st.write(content)   
+
 # Form to accept user's text input for summarization
 result = []
 with st.form('summarize_form', clear_on_submit=True):
@@ -74,7 +89,7 @@ with st.form('summarize_form', clear_on_submit=True):
     if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
             response1 = summarize_pdfs_from_folder(txt_input)
-            #response = generate_response(txt_input)
+            #response = generate_response(uploaded_file )
             result.append(response1)
             del openai_api_key
 
