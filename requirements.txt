@@ -1,0 +1,5 @@
+streamlit>=1.26.0
+langchain
+openai
+tiktoken
+langchain-openai
