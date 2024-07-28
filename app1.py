@@ -11,7 +11,7 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain_community.document_loaders import PyPDFLoader
 import PyPDF2
 #from langchain import OpenAI, PromptTemplate
-#import glob
+##import glob
 
 
 def summarize_pdfs_from_folder(pdf_file):
