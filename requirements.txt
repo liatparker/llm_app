@@ -4,3 +4,4 @@ openai
 tiktoken
 langchain-openai
 langchain_community
+os
