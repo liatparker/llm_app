@@ -73,7 +73,7 @@ uploaded_file = st.file_uploader(
 #for uploaded_file in uploaded_files:
 if uploaded_file is not None:
     # Read the PDF file
-    pdf_reader = PyPDF2.PdfFileReader(uploaded_file)
+    pdf_reader = PyPDF2.PdfReader(uploaded_file)
     # Extract the content
     content = ""
     for page in range(pdf_reader.getNumPages()):
