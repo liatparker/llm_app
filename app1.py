@@ -76,7 +76,7 @@ if uploaded_file is not None:
     pdf_reader = PyPDF2.PdfReader(uploaded_file)
     # Extract the content
     content = ""
-    for page in range(pdf_reader.getNumPages()):
+    for page in range(len(pdf_reader.pages)):
         content += pdf_reader.getPage(page).extractText()
     # Display the content
     st.write(content)   
