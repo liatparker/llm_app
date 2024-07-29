@@ -72,7 +72,7 @@ st.title('🦜🔗 Text Summarization App')
 #txt_input = st.text_area('upload your pdf file', '', height=200)
 
 uploaded_file = st.file_uploader(
-    pdf_file, type="pdf")#, accept_multiple_files=True)
+    "upload pdf file", type="pdf")#, accept_multiple_files=True)
 #for uploaded_file in uploaded_files:
 #if uploaded_file is not None:
     # Read the PDF file
