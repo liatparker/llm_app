@@ -21,7 +21,7 @@ def summarize_pdfs_from_folder(pdf_file):
     #summaries = []
     #for pdf_file in pdfs_folder:
     #for pdf_file in glob.glob(pdfs_folder + "/*.pdf"):
-    glob.glob(pdf_file)
+    pdf_file = glob.glob(pdf_file)
     loader = PyPDFLoader(pdf_file)
     docs = loader.load_and_split()
     chain = load_summarize_chain(llm, chain_type="map_reduce")
