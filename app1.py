@@ -15,6 +15,8 @@ import PyPDF2
 
 
 def summarize_pdfs_from_folder(pdf_file):
+    uploaded_file = st.file_uploader(
+    pdf_file, type="pdf")#, accept_multiple_files=True)
     llm = OpenAI(temperature=0.2, openai_api_key=openai_api_key) 
     #summaries = []
     #for pdf_file in pdfs_folder:
@@ -69,7 +71,7 @@ st.title('🦜🔗 Text Summarization App')
 # Text input
 #txt_input = st.text_area('upload your pdf file', '', height=200)
 uploaded_file = st.file_uploader(
-    txt_input, type="pdf")#, accept_multiple_files=True)
+    pdf_file, type="pdf")#, accept_multiple_files=True)
 #for uploaded_file in uploaded_files:
 #if uploaded_file is not None:
     # Read the PDF file
@@ -88,7 +90,7 @@ with st.form('summarize_form', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            response1 = summarize_pdfs_from_folder(uploaded_file)
+            response1 = summarize_pdfs_from_folder()
             #response = generate_response(uploaded_file )
             result.append(response1)
             del openai_api_key
