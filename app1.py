@@ -67,19 +67,19 @@ st.set_page_config(page_title='🦜🔗 Text Summarization App')
 st.title('🦜🔗 Text Summarization App')
 
 # Text input
-txt_input = st.text_area('upload your pdf file', '', height=200)
+#txt_input = st.text_area('upload your pdf file', '', height=200)
 uploaded_file = st.file_uploader(
     txt_input, type="pdf")#, accept_multiple_files=True)
 #for uploaded_file in uploaded_files:
-if uploaded_file is not None:
+#if uploaded_file is not None:
     # Read the PDF file
-    pdf_reader = PyPDF2.PdfReader(uploaded_file)
+ #   pdf_reader = PyPDF2.PdfReader(uploaded_file)
     # Extract the content
-    content = ""
-    for page in range(len(pdf_reader.pages)):
-        content += pdf_reader.pages[page].extract_text()
+ #   content = ""
+ #   for page in range(len(pdf_reader.pages)):
+ #       content += pdf_reader.pages[page].extract_text()
     # Display the content
-    st.write(content)   
+ #   st.write(content)   
 
 # Form to accept user's text input for summarization
 result = []
@@ -88,7 +88,7 @@ with st.form('summarize_form', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            response1 = summarize_pdfs_from_folder(txt_input)
+            response1 = summarize_pdfs_from_folder(uploaded_file)
             #response = generate_response(uploaded_file )
             result.append(response1)
             del openai_api_key
