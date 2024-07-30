@@ -13,7 +13,7 @@ import PyPDF2
 import glob
 
 
-def summarize_pdfs_from_folder(pdf_file):
+def generate_response (pdf_file):
     #uploaded_file = st.file_uploader(
     #pdf_file, type="pdf")#, accept_multiple_files=True)
     llm = OpenAI(temperature=0.2, openai_api_key=openai_api_key) 
@@ -60,7 +60,7 @@ def custom_summary(pdf_folder, custom_prompt):
 
     return summaries
 
-def generate_response(txt):
+def generate_response1(txt):
     # Instantiate the LLM model
     llm = OpenAI(temperature=0, openai_api_key=openai_api_key)
     # Split text
@@ -99,8 +99,8 @@ with st.form('summarize_form', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            response= summarize_pdfs_from_folder(uploaded_file)
-            #response = generate_response(uploaded_file )
+            #response= summarize_pdfs_from_folder(uploaded_file)
+            response = generate_response(uploaded_file )
             result.append(response)
             del openai_api_key
 
