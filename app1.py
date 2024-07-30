@@ -78,7 +78,7 @@ st.title('🦜🔗 Text Summarization App')
 
 # Text input
 
-txt_input = st.text_area('upload your pdf file', '', height=200)
+#txt_input = st.text_area('upload your pdf file', '', height=200)
 
 uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")#, accept_multiple_files=True)
