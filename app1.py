@@ -95,7 +95,7 @@ uploaded_file = st.file_uploader(
 # Form to accept user's text input for summarization
 result = []
 with st.form('summarize_form', clear_on_submit=True):
-    openai_api_key = st.text_input('OpenAI API Key', type = 'password', disabled=not uploaded_file)
+    openai_api_key = st.text_input('OpenAI API Key', type = 'password')
     submitted = st.form_submit_button('Submit')
     if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
