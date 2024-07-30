@@ -1,8 +1,12 @@
 import streamlit as st
-from langchain import OpenAI
+from langchain_openai import OpenAI
 from langchain.docstore.document import Document
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.chains.summarize import load_summarize_chain
+from langchain.chains.summarize import load_summarize_chain
+#from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader, UnstructuredFileLoader
+
 
 def generate_response(txt):
     # Instantiate the LLM model
