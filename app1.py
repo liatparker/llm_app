@@ -99,10 +99,10 @@ with st.form('summarize_form', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            response1 = summarize_pdfs_from_folder(uploaded_file)
+            response= summarize_pdfs_from_folder(uploaded_file)
             #response = generate_response(uploaded_file )
-            result.append(response1)
+            result.append(response)
             del openai_api_key
 
 if len(result):
-    st.info(response1)
+    st.info(response)
