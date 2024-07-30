@@ -6,3 +6,4 @@ langchain-openai
 langchain_community
 PyPDF2
 glob2
+unstructured
