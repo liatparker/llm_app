@@ -32,7 +32,8 @@ def summarize_pdfs_from_folder(pdf_file):
        docs = loader.load_and_split()
        chain = load_summarize_chain(llm, chain_type="map_reduce")
        summary = chain.run(docs)
-       st.write(summary)
+       return summary
+       #st.write(summary)
     #print("Summary for: ", pdf_file)
     #print(summary)
         #print("\n")
