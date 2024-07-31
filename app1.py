@@ -6,7 +6,7 @@ from langchain.docstore.document import Document
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.chains.summarize import load_summarize_chain
 from langchain.chains.summarize import load_summarize_chain
-#from langchain.document_loaders import PyPDFLoader
+from langchain.document_loaders import PyPDFLoader
 from langchain_community.document_loaders.unstructured import UnstructuredFileLoader
 #import PyPDF2
 #from langchain import OpenAI, PromptTemplate
@@ -21,18 +21,12 @@ def summarize_pdfs_from_folder (pdf_file):
     #for pdf_file in pdfs_folder:
     #for pdf_file in glob.glob(pdfs_folder + "/*.pdf"):
     #pdf_file = glob.glob(pdf_file)
-    if pdf_file :
-       temp_file = "./temp.pdf"
-       with open(temp_file, "wb") as file:
-        file.write(uploaded_file.getvalue())
-        file_name = pdf_file.name
-
-       loader = UnstructuredFileLoader(temp_file, strategy="fast")
-    #loader = PyPDFLoader(pdf_file)
-       docs = loader.load_and_split()
-       chain = load_summarize_chain(llm, chain_type="map_reduce")
-       summary = chain.run(docs)
-       return summary
+    if pdf_file :  # check if path is not None
+        loader = PyPDFLoader(pdf_file.name)
+        docs = loader.load_and_split()
+        chain = load_summarize_chain(llm, chain_type="map_reduce")
+        summary = chain.run(docs)
+        return summary
        #st.write(summary)
     #print("Summary for: ", pdf_file)
     #print(summary)
