@@ -8,3 +8,4 @@ PyPDF2
 glob2
 unstructured
 unstructured[pdf]
+opencv-python
