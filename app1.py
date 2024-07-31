@@ -16,7 +16,9 @@ import glob
 def summarize_pdfs_from_folder (pdf_file):
     #uploaded_file = st.file_uploader(
     #pdf_file, type="pdf")#, accept_multiple_files=True)
-    llm = OpenAI(temperature=0.2, openai_api_key=openai_api_key) 
+    llm = OpenAI(temperature=0.2, openai_api_key=openai_api_key)
+    with open(pdf_file.name, mode='wb') as w:
+        w.write(pdf_file.getvalue())
     #summaries = []
     #for pdf_file in pdfs_folder:
     #for pdf_file in glob.glob(pdfs_folder + "/*.pdf"):
