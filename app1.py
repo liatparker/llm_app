@@ -7,7 +7,7 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.chains.summarize import load_summarize_chain
 from langchain.chains.summarize import load_summarize_chain
 from langchain.document_loaders import PyPDFLoader
-from langchain_community.document_loaders.unstructured import UnstructuredFileLoader
+#from langchain_community.document_loaders.unstructured import UnstructuredFileLoader
 #import PyPDF2
 #from langchain import OpenAI, PromptTemplate
 import glob
