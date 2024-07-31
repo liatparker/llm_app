@@ -27,7 +27,7 @@ def summarize_pdfs_from_folder (pdf_file):
     if pdf_file :  # check if path is not None
         loader = PyPDFLoader(pdf_file.name)
         docs = loader.load_and_split()
-        chain = load_summarize_chain(llm, chain_type="stuff")
+        chain = load_summarize_chain(llm, chain_type="map_reduce")
         summary = chain.run(docs)
         return summary
        #st.write(summary)
