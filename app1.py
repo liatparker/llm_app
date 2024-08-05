@@ -107,6 +107,7 @@ with st.form('summarize_form', clear_on_submit=True):
                 #response = generate_response(txt_input )
                 result.append(response)
                 del openai_api_key
+                del anthropic_api_key
 
 if len(result):
     st.info(response)
