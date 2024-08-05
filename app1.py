@@ -16,8 +16,7 @@ import os
 from langchain_anthropic import AnthropicLLM
 
 
-anthropic_ai_key = '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'
-os.environ['ANTHROPIC_API_KEY'] = anthropic_ai_key
+
 def summarize_pdfs_from_folder (pdf_file):
     #uploaded_file = st.file_uploader(
     #pdf_file, type="pdf")#, accept_multiple_files=True)
@@ -98,14 +97,16 @@ uploaded_file = st.file_uploader(
 # Form to accept user's text input for summarization
 result = []
 with st.form('summarize_form', clear_on_submit=True):
-    openai_api_key = st.text_input('OpenAI API Key', type = 'password')
+    openai_api_key = st.text_input('OpenAI API Key', type='password')
+    anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
     submitted = st.form_submit_button('Submit')
     if submitted and openai_api_key.startswith('sk-'):
-        with st.spinner('Calculating...'):
-            response= summarize_pdfs_from_folder(uploaded_file)
-            #response = generate_response(txt_input )
-            result.append(response)
-            del openai_api_key
+        if submitted and anthropic_api_key.startswith('sk-'):
+            with st.spinner('Calculating...'):
+                response= summarize_pdfs_from_folder(uploaded_file)
+                #response = generate_response(txt_input )
+                result.append(response)
+                del openai_api_key
 
 if len(result):
     st.info(response)
