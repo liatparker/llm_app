@@ -17,7 +17,7 @@ import glob
 def summarize_pdfs_from_folder (pdf_file):
     #uploaded_file = st.file_uploader(
     #pdf_file, type="pdf")#, accept_multiple_files=True)
-    llm = OpenAI(temperature=0.2, openai_api_key=openai_api_key)
+    llm = OpenAI(temperature=0.2,model_name="gpt-3.5-turbo", openai_api_key=openai_api_key)
     with open(pdf_file.name, mode='wb') as w:
         w.write(pdf_file.getvalue())
     #summaries = []
@@ -27,7 +27,7 @@ def summarize_pdfs_from_folder (pdf_file):
     if pdf_file :  # check if path is not None
         loader = PyPDFLoader(pdf_file.name)
         docs = loader.load_and_split()
-        chain = load_summarize_chain(llm, chain_type="map_reduce")
+        chain = load_summarize_chain(llm, chain_type="stuff")
         summary = chain.run(docs)
         return summary
        #st.write(summary)
