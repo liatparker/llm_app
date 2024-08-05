@@ -10,4 +10,4 @@ unstructured
 unstructured[pdf]
 opencv-python
 skia-python
-
+langchain_anthropic
