@@ -17,7 +17,7 @@ from langchain_anthropic import AnthropicLLM
 def summarize_pdfs_from_folder (pdf_file):
     #uploaded_file = st.file_uploader(
     #pdf_file, type="pdf")#, accept_multiple_files=True)
-    llm = AnthropicLLM(model='claude-2.1', anthropic_api_key = anthropic_api_key)
+    llm = AnthropicLLM(model='claude-2.1', anthropic_api_key = anthropic_api_key,temperature=0 )
     with open(pdf_file.name, mode='wb') as w:
         w.write(pdf_file.getvalue())
     if pdf_file :  # check if path is not None
