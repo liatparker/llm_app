@@ -112,7 +112,7 @@ if len(result):
     st.info(response)
 
 result1 = []
-with st.form('summarize_form', clear_on_submit=True):
+with st.form('summarize_form1', clear_on_submit=True):
     openai_api_key = st.text_input('OpenAI API Key', type = 'password')
     submitted = st.form_submit_button('Submit')
     if submitted and openai_api_key.startswith('sk-'):
