@@ -30,7 +30,7 @@ def summarize_pdfs_from_folder (pdf_file):
 def summarize_pdfs_from_folder1 (pdf_file):
     #uploaded_file = st.file_uploader(
     #pdf_file, type="pdf")#, accept_multiple_files=True)
-    llm = OpenAI(temperature=0, model_name='gpt-3.5-turbo-16k',  openai_api_key=openai_api_key)
+    llm = OpenAI(temperature=0, model_name='gpt-3.5-turbo-instruct',  openai_api_key=openai_api_key)
     with open(pdf_file.name, mode='wb') as w:
         w.write(pdf_file.getvalue())
     if pdf_file :  # check if path is not None
@@ -101,12 +101,10 @@ with st.form('summarize_form', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            response= summarize_pdfs_from_folder(uploaded_file)[0]
+            response= summarize_pdfs_from_folder(uploaded_file)
             #response = generate_response(txt_input )
             result.append(response)
             del anthropic_api_key
-
-
 if len(result):
     st.info(response)
 
