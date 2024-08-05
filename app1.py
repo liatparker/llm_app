@@ -29,7 +29,7 @@ def summarize_pdfs_from_folder (pdf_file):
     #llm = OpenAI(temperature=0.2,model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
 =======
     #llm = OpenAI(temperature=0.2,model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
-    llm = AnthropicLLM(model='claude-2.1')
+
 >>>>>>> 46e4da5e992c8ef497348105ff2bd39d387edbbb
     with open(pdf_file.name, mode='wb') as w:
         w.write(pdf_file.getvalue())
