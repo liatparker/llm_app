@@ -95,14 +95,14 @@ uploaded_file = st.file_uploader(
  #   st.write(content)
 
 # Form to accept user's text input for summarization
-response, response1 = summarize_pdfs_from_folder(uploaded_file)
+
 result = []
 with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            #response= summarize_pdfs_from_folder(uploaded_file)[0]
+            response= summarize_pdfs_from_folder(uploaded_file)[0]
             #response = generate_response(txt_input )
             result.append(response)
             del anthropic_api_key
@@ -117,7 +117,7 @@ with st.form('summarize_form1', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            #response= summarize_pdfs_from_folder(uploaded_file)
+            response1= summarize_pdfs_from_folder(uploaded_file)[1]
             #response = generate_response(txt_input )
             result1.append(response1)
             del openai_api_key
