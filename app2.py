@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 from langchain_openai import OpenAI
 from langchain.docstore.document import Document
@@ -12,25 +10,19 @@ from langchain_community.document_loaders import PyPDFLoader
 #import PyPDF2
 #from langchain import OpenAI, PromptTemplate
 import glob
-<<<<<<< HEAD
+
 import os
-from langchain_anthropic import AnthropicLLM
+from getpass import getpass
 
+os.environ["AI21_API_KEY"] = getpass()
+from langchain_ai21 import AI21SemanticTextSplitter
 
-=======
-from langchain_anthropic import AnthropicLLM
-
-
+semantic_text_splitter = AI21SemanticTextSplitter()
+chunks = semantic_text_splitter.split_text(TEXT)
 def summarize_pdfs_from_folder (pdf_file):
     #uploaded_file = st.file_uploader(
     #pdf_file, type="pdf")#, accept_multiple_files=True)
-<<<<<<< HEAD
-    llm = AnthropicLLM(model='claude-2.1', anthropic_api_key= anthropic_api_key)
-    #llm = OpenAI(temperature=0.2,model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
-=======
-    #llm = OpenAI(temperature=0.2,model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
-    llm = AnthropicLLM(model='claude-2.1')
->>>>>>> 46e4da5e992c8ef497348105ff2bd39d387edbbb
+    llm = OpenAI(temperature=0.2, openai_api_key=openai_api_key,model_name="gpt-3.5-turbo-1106")
     with open(pdf_file.name, mode='wb') as w:
         w.write(pdf_file.getvalue())
     #summaries = []
@@ -40,7 +32,7 @@ def summarize_pdfs_from_folder (pdf_file):
     if pdf_file :  # check if path is not None
         loader = PyPDFLoader(pdf_file.name)
         docs = loader.load_and_split()
-        chain = load_summarize_chain(llm, chain_type="stuff")
+        chain = load_summarize_chain(llm, chain_type="map_reduce")
         summary = chain.run(docs)
         return summary
        #st.write(summary)
@@ -101,24 +93,19 @@ uploaded_file = st.file_uploader(
  #   for page in range(len(pdf_reader.pages)):
  #       content += pdf_reader.pages[page].extract_text()
     # Display the content
- #   st.write(content)   
+ #   st.write(content)
 
 # Form to accept user's text input for summarization
 result = []
 with st.form('summarize_form', clear_on_submit=True):
-<<<<<<< HEAD
-    #openai_api_key = st.text_input('OpenAI API Key', type='password')
-=======
-    #openai_api_key = st.text_input('OpenAI API Key', type = 'password')
->>>>>>> 46e4da5e992c8ef497348105ff2bd39d387edbbb
-    anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
+    openai_api_key = st.text_input('OpenAI API Key', type = 'password')
     submitted = st.form_submit_button('Submit')
-    if submitted and anthropic_api_key.startswith('sk-'):
+    if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
             response= summarize_pdfs_from_folder(uploaded_file)
-           #response = generate_response(txt_input )
+            #response = generate_response(txt_input )
             result.append(response)
-            del anthropic_api_key
+            del openai_api_key
 
 if len(result):
     st.info(response)
