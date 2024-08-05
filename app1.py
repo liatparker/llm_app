@@ -12,12 +12,17 @@ from langchain_community.document_loaders import PyPDFLoader
 #import PyPDF2
 #from langchain import OpenAI, PromptTemplate
 import glob
+import os
+from langchain_anthropic import AnthropicLLM
 
 
+anthropic_ai_key = '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'
+os.environ['ANTHROPIC_API_KEY'] = anthropic_ai_key
 def summarize_pdfs_from_folder (pdf_file):
     #uploaded_file = st.file_uploader(
     #pdf_file, type="pdf")#, accept_multiple_files=True)
-    llm = OpenAI(temperature=0.2,model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
+    llm = AnthropicLLM(model='claude-2.1')
+    #llm = OpenAI(temperature=0.2,model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
     with open(pdf_file.name, mode='wb') as w:
         w.write(pdf_file.getvalue())
     #summaries = []
