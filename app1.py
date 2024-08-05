@@ -17,30 +17,29 @@ from langchain_anthropic import AnthropicLLM
 def summarize_pdfs_from_folder (pdf_file):
     #uploaded_file = st.file_uploader(
     #pdf_file, type="pdf")#, accept_multiple_files=True)
-    llm1 = OpenAI(temperature=0.2,model_name='gpt-4-turbo', openai_api_key=openai_api_key)
     llm = AnthropicLLM(model='claude-2.1', anthropic_api_key = anthropic_api_key)
-
     with open(pdf_file.name, mode='wb') as w:
         w.write(pdf_file.getvalue())
-    #summaries = []
-    #for pdf_file in pdfs_folder:
-    #for pdf_file in glob.glob(pdfs_folder + "/*.pdf"):
-    #pdf_file = glob.glob(pdf_file)
     if pdf_file :  # check if path is not None
         loader = PyPDFLoader(pdf_file.name)
         docs = loader.load_and_split()
         chain = load_summarize_chain(llm, chain_type="stuff")
-        chain1 = load_summarize_chain(llm1, chain_type="stuff")
         summary = chain.run(docs)
-        summary1 = chain1.run(docs)
-        return summary, summary1
-       #st.write(summary)
-    #print("Summary for: ", pdf_file)
-    #print(summary)
-        #print("\n")
-        #summaries.append(summary)
-    #return summary
-    #return summaries
+        return summary
+
+def summarize_pdfs_from_folder1 (pdf_file):
+    #uploaded_file = st.file_uploader(
+    #pdf_file, type="pdf")#, accept_multiple_files=True)
+    llm = OpenAI(temperature=0, model_name='gpt-4-turbo',  openai_api_key=openai_api_key)
+    with open(pdf_file.name, mode='wb') as w:
+        w.write(pdf_file.getvalue())
+    if pdf_file :  # check if path is not None
+        loader = PyPDFLoader(pdf_file.name)
+        docs = loader.load_and_split()
+        chain = load_summarize_chain(llm, chain_type="stuff")
+        summary = chain.run(docs)
+        return summary
+
 
 
 def custom_summary(pdf_folder, custom_prompt):
@@ -117,7 +116,7 @@ with st.form('summarize_form1', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            response1= summarize_pdfs_from_folder(uploaded_file)[1]
+            response1= summarize_pdfs_from_folder1(uploaded_file)
             #response = generate_response(txt_input )
             result1.append(response1)
             del openai_api_key
