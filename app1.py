@@ -17,8 +17,9 @@ from langchain_anthropic import AnthropicLLM
 def summarize_pdfs_from_folder (pdf_file):
     #uploaded_file = st.file_uploader(
     #pdf_file, type="pdf")#, accept_multiple_files=True)
-    #llm = OpenAI(temperature=0.2,model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
+    llm1 = OpenAI(temperature=0.2,model_name='gpt-4-turbo', openai_api_key=openai_api_key)
     llm = AnthropicLLM(model='claude-2.1', anthropic_api_key = anthropic_api_key)
+
     with open(pdf_file.name, mode='wb') as w:
         w.write(pdf_file.getvalue())
     #summaries = []
@@ -29,8 +30,10 @@ def summarize_pdfs_from_folder (pdf_file):
         loader = PyPDFLoader(pdf_file.name)
         docs = loader.load_and_split()
         chain = load_summarize_chain(llm, chain_type="stuff")
+        chain1 = load_summarize_chain(llm1, chain_type="stuff")
         summary = chain.run(docs)
-        return summary
+        summary1 = chain1.run(docs)
+        return summary, summary1
        #st.write(summary)
     #print("Summary for: ", pdf_file)
     #print(summary)
@@ -94,15 +97,31 @@ uploaded_file = st.file_uploader(
 # Form to accept user's text input for summarization
 result = []
 with st.form('summarize_form', clear_on_submit=True):
-    #openai_api_key = st.text_input('OpenAI API Key', type = 'password')
+    openai_api_key = st.text_input('OpenAI API Key', type = 'password')
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            response= summarize_pdfs_from_folder(uploaded_file)
+            response= summarize_pdfs_from_folder(uploaded_file)[0]
             #response = generate_response(txt_input )
             result.append(response)
             del anthropic_api_key
 
+
 if len(result):
     st.info(response)
+
+result1 = []
+with st.form('summarize_form', clear_on_submit=True):
+    openai_api_key = st.text_input('OpenAI API Key', type = 'password')
+    submitted = st.form_submit_button('Submit')
+    if submitted and openai_api_key.startswith('sk-'):
+        with st.spinner('Calculating...'):
+            response1= summarize_pdfs_from_folder(uploaded_file)[1]
+            #response = generate_response(txt_input )
+            result1.append(response1)
+            del openai_api_key
+
+
+if len(result1):
+    st.info(response1)
