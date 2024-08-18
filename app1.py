@@ -1,7 +1,7 @@
 
 
 import streamlit as st
-from langchain_openai import OpenAI
+from langchain_OpenAIpy import OpenAI
 from langchain.docstore.document import Document
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.chains.summarize import load_summarize_chain
@@ -10,7 +10,7 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain_community.document_loaders import PyPDFLoader
 #from langchain_community.document_loaders.unstructured import UnstructuredFileLoader
 #import PyPDF2
-#from langchain import OpenAI, PromptTemplate
+from langchain import OpenAI, PromptTemplate
 import glob
 from langchain_anthropic import AnthropicLLM
 
@@ -59,7 +59,12 @@ def custom_summary(pdf_folder, custom_prompt):
         summaries.append(summary_output)
 
     return summaries
-
+CUSTOM_PROMPT = "Write a concise summary of the following paper with this structure: Problem being solved; Approach; Main results; Main Discussion Points"
+custom_summaries = custom_summary("./pdfs", custom_prompt=CUSTOM_PROMPT)
+# Save all summaries into one .txt file
+with open("custom_summaries.txt", "w") as f:
+    for summary in custom_summaries:
+        f.write(summary + "\n"*3)
 def generate_response1(txt):
     # Instantiate the LLM model
     llm = OpenAI(temperature=0.2, openai_api_key=openai_api_key)
