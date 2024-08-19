@@ -22,7 +22,8 @@ def get_completion(client, prompt):
     return client.messages.create(
         model=MODEL_NAME,
         max_tokens=4096,
-        messages=[{
+        anthropic_api_key = anthropic_api_key ,
+    messages=[{
             "role": 'user', "content":  prompt
         }]
     ).content[0].text
