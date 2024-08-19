@@ -1,6 +1,6 @@
 import streamlit as st
 from pypdf import PdfReader
-import PyPDF2
+
 from openai import OpenAI
 import tiktoken
 from tqdm import tqdm
@@ -60,7 +60,7 @@ st.title('🦜🔗 Text Summarization App')
 
 uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")#, accept_multiple_files=True)
-from PyPDF2 import PdfReader
+
 import streamlit as st
 
 
