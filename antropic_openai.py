@@ -5,7 +5,7 @@ from openai import OpenAI
 import tiktoken
 from tqdm import tqdm
 from anthropic import Anthropic
-from transformers import GPT2TokenizerFast
+
 import pandas as pd
 
 
@@ -60,16 +60,16 @@ st.title('🦜🔗 Text Summarization App')
 
 uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")#, accept_multiple_files=True)
+from PyPDF2 import PdfReader
+import streamlit as st
 
 
-# Form to accept user's text input for summarization
 
-
-with open(uploaded_file.name, mode='wb') as w:
-    w.write(uploaded_file.getvalue())
-if uploaded_file:  # check if path is not None
-    reader = PdfReader(uploaded_file.name)
-    text = ''.join(page.extract_text() for page in reader.pages)
+if uploaded_file is not None:
+    text = ""
+    reader = PdfReader(uploaded_file)
+    for page in reader.pages:
+        text += page.extract_text()
 
 
 
