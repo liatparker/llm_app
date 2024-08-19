@@ -87,20 +87,20 @@ with st.form('summarize_form', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-             response = get_completion(client, prompt= (
+             response = get_completion(client, prompt= ([
                                          f"""Here is an academic paper: <paper>{text}</paper>
 
                                            Please do the following:
 
-                                           Write in point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)"""
-                                         # f"""Here is an academic paper: <paper>{text}</paper>
-                                         #
-                                         #                Please do the following:
-                                         #
-                                         #                Write in point form and focus on major sections (<extract summary>)"""
+                                           Write in point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
+                                         f"""Here is an academic paper: <paper>{text}</paper>
+
+                                                        Please do the following:
+
+                                                        Write in point form and focus on major sections (<extract summary>)"""
 
 
-                                        ))
+                                        ]))
 
              result.append(response)
              del anthropic_api_key
