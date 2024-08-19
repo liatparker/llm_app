@@ -105,7 +105,7 @@ with st.form('summarize_form', clear_on_submit=True):
                 response = get_completion(client, prompt= prompt)
 
                 result.append(response)
-                del anthropic_api_key
+            del anthropic_api_key
 if len(result):
     st.info(response)
 
