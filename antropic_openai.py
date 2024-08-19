@@ -102,7 +102,7 @@ with st.form('summarize_form', clear_on_submit=True):
 
                                         ]
             for item in prompts:
-                response = get_completion(client, prompt= (item))
+                response = get_completion(client, prompt= item)
 
                 result.append(response)
                 del anthropic_api_key
