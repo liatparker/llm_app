@@ -12,7 +12,7 @@ import pandas as pd
 # reader = PdfReader("/Users/Liatparker/downloads/attention_is_all_you_need.pdf")
 # number_of_pages = len(reader.pages)
 # text = ''.join(page.extract_text() for page in reader.pages)
-api_key = os.environ.get('ANTHROPIC API KEY')
+api_key = os.environ.get('API_KEY')
 client = Anthropic(api_key = api_key)
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
