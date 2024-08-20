@@ -120,8 +120,7 @@ with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
     txt_input1 = st.text_area('summary focused on hypothesis, methodology, results and conclusions', '', height=200)
     submitted1 = st.form_submit_button('submit')
-    txt_input2 = st.text_area('summary focused on major sections ', '', height=200)
-    submitted2 = st.form_submit_button('Submit')
+
 
     if submitted1 and anthropic_api_key.startswith('sk-') :
         with st.spinner('Calculating...'):
@@ -129,16 +128,16 @@ with st.form('summarize_form', clear_on_submit=True):
                 result.append(response)
                 del anthropic_api_key
 if len(result):
-    st.info(result)
-    if submitted2 and anthropic_api_key.startswith('sk-') :
-        with st.spinner('Calculating...'):
+    with st.form('summarize_form', clear_on_submit=True):
+        anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
+        txt_input2 = st.text_area('summary focused on major sections ', '', height=200)
+        submitted2 = st.form_submit_button('Submit')
+
+        if submitted2 and anthropic_api_key.startswith('sk-'):
+            with st.spinner('Calculating...'):
                 response = get_completion(client, prompt2)
                 result.append(response)
                 del anthropic_api_key
-
-
-
-
 
 if len(result):
     st.info(result)
