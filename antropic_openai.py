@@ -24,13 +24,14 @@ st.set_page_config(page_title='🦜🔗 Text Summarization App')
 st.title('🦜🔗 Text Summarization App')
 uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")
+
+if uploaded_file is not None:
+    text = ""
+    reader = PdfReader(uploaded_file)
+    for page in reader.pages:
+        text += page.extract_text()
 def create_messages(prompts):
     summaries= []
-    if uploaded_file is not None:
-        text = ""
-        reader = PdfReader(uploaded_file)
-        for page in reader.pages:
-            text += page.extract_text()
     prompts = [
         f"""Here is an academic paper: <paper>{text}</paper>
 
