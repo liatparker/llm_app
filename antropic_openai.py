@@ -80,9 +80,11 @@ MODEL_NAME = 'claude-3-5-sonnet-20240620'
 if uploaded_file is not None:
     reader = PdfReader(uploaded_file)
     text1 = ''.join(page.extract_text() for page in reader.pages)
-def custom_prompt(text):
-
-    prompts = [
+def custom_prompt():
+    if uploaded_file is not None:
+        reader = PdfReader(uploaded_file)
+        text = ''.join(page.extract_text() for page in reader.pages)
+        prompts = [
                   f"""Here is an academic paper: <paper>{text}</paper>
 
                                Please do the following:
@@ -93,10 +95,10 @@ def custom_prompt(text):
                                             Please do the following:
 
                                             Write in bullet point form and focus on major sections (<extract summary>)"""]
-    return prompts
+        return prompts
 
 
-custom_prompt = custom_prompt(text1)
+custom_prompt = custom_prompt()
 result = []
 with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
