@@ -128,6 +128,8 @@ with st.form('summarize_form', clear_on_submit=True):
                 response = get_completion(client, prompt1)
                 result.append(response)
                 del anthropic_api_key
+if len(result):
+    st.info(result)
     if submitted2 and anthropic_api_key.startswith('sk-') :
         with st.spinner('Calculating...'):
                 response = get_completion(client, prompt2)
