@@ -22,6 +22,7 @@ import pandas as pd
 # Page title
 st.set_page_config(page_title='🦜🔗 Text Summarization App')
 st.title('🦜🔗 Text Summarization App')
+
 uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")
 
@@ -31,7 +32,10 @@ if uploaded_file is not None:
     for page in reader.pages:
         text += page.extract_text()
 
-    prompts = [
+prompts = [
+
+
+
         f"""Here is an academic paper: <paper>{text}</paper>
 
                                    Please do the following:
