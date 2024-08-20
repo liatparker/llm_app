@@ -93,25 +93,26 @@ with st.form('summarize_form', clear_on_submit=True):
 
                                            Please do the following:
 
-                                           Write in point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
+                                           Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
                                          f"""Here is an academic paper: <paper>{text}</paper>
 
                                                         Please do the following:
 
-                                                        Write in point form and focus on major sections (<extract summary>)"""]
+                                                        Write in bullet point form and focus on major sections (<extract summary>)"""]
 
 
 
             for prompt in prompts:
                 response = get_completion(client, prompt= prompt)
-            result.append(response)
-            summaries.append((result))
-            del anthropic_api_key
+                result.append(response)
+                st.write("\n")
+                #summaries.append((result))
+                del anthropic_api_key
 
 
 
 if len(result):
-    st.info(summaries)
+    st.info(result)
 
 # result1 = []
 # with st.form('summarize_form1', clear_on_submit=True):
