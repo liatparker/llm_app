@@ -118,9 +118,8 @@ prompt2 = f"""Here is an academic paper: <paper>{text}</paper>
 result = []
 with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
-    txt_input1 = st.text_area('summary focused on hypothesis, methodology, results and conclusions', '', height=200)
     submitted1 = st.form_submit_button('submit')
-
+    txt_input1 = st.text_area('summary focused on hypothesis, methodology, results and conclusions', '', height=200)
 
     if submitted1 and anthropic_api_key.startswith('sk-') :
         with st.spinner('Calculating...'):
