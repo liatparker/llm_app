@@ -21,11 +21,32 @@ import pandas as pd
 
 
 
+# Page title
+st.set_page_config(page_title='🦜🔗 Text Summarization App')
+st.title('🦜🔗 Text Summarization App')
+
+uploaded_file = st.file_uploader(
+    "upload pdf file", type="pdf")
 
 
+def create_messages(prompts,text):
 
-def create_messages(prompts):
     summaries= []
+    if uploaded_file is not None:
+        reader = PdfReader(uploaded_file)
+        text = ''.join(page.extract_text() for page in reader.pages)
+        print(text)
+    prompts = [
+        f"""Here is an academic paper: <paper>{text}</paper>
+
+                                   Please do the following:
+
+                                   Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
+        f"""Here is an academic paper: <paper>{text}</paper>
+
+                                                Please do the following:
+
+                                                Write in bullet point form and focus on major sections (<extract summary>)"""]
     for prompt in prompts :
         message = {"role": 'user', "content": prompt
              }
@@ -42,12 +63,7 @@ def get_completion(client, prompts):
     ).content[0].text
 
 
-# Page title
-st.set_page_config(page_title='🦜🔗 Text Summarization App')
-st.title('🦜🔗 Text Summarization App')
 
-uploaded_file = st.file_uploader(
-    "upload pdf file", type="pdf")
 
 # Text input
 
@@ -74,21 +90,7 @@ client = Anthropic()
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 result = []
 
-if uploaded_file is not None:
-    reader = PdfReader(uploaded_file)
-    text = ''.join(page.extract_text() for page in reader.pages)
-    print(text)
-prompts = [
-    f"""Here is an academic paper: <paper>{text}</paper>
 
-                               Please do the following:
-
-                               Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
-    f"""Here is an academic paper: <paper>{text}</paper>
-
-                                            Please do the following:
-
-                                            Write in bullet point form and focus on major sections (<extract summary>)"""]
 
 with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
