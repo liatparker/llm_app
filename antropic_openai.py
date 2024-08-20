@@ -29,9 +29,16 @@ uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")
 
 
-def create_messages(prompts,text):
+def create_messages(prompts):
 
     summaries= []
+
+    for prompt in prompts :
+        message = {"role": 'user', "content": prompt
+             }
+        summaries.append(message)
+    return summaries
+def get_completion(client, prompts,text):
     if uploaded_file is not None:
         reader = PdfReader(uploaded_file)
         text = ''.join(page.extract_text() for page in reader.pages)
@@ -47,12 +54,6 @@ def create_messages(prompts,text):
                                                 Please do the following:
 
                                                 Write in bullet point form and focus on major sections (<extract summary>)"""]
-    for prompt in prompts :
-        message = {"role": 'user', "content": prompt
-             }
-        summaries.append(message)
-    return summaries
-def get_completion(client, prompts):
 
     client = Anthropic(api_key=anthropic_api_key)
     MODEL_NAME = 'claude-3-5-sonnet-20240620'
