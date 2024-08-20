@@ -27,6 +27,14 @@ st.title('🦜🔗 Text Summarization App')
 uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")
 
+if uploaded_file is not None:
+    # Read the PDF file
+    pdf_reader = PdfReader(uploaded_file)
+    # Extract the content
+    text= ''
+    for page in pdf_reader.pages:
+        text += page.extract_text()
+
 
 
 def get_completion(client, prompt):
@@ -71,6 +79,9 @@ client = Anthropic()
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
 
+uploaded_file = st.file_uploader(
+    "upload pdf file", type="pdf")
+
 if uploaded_file is not None:
     # Read the PDF file
     pdf_reader = PdfReader(uploaded_file)
@@ -82,13 +93,12 @@ if uploaded_file is not None:
 
 
 
-        prompt1 = f"""Here is an academic paper: <paper>{text}</paper>
+prompt1 = f"""Here is an academic paper: <paper>{text}</paper>
 
                        Please do the following:
 
             point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)"""
-
-        prompt2 = f"""Here is an academic paper: <paper>{text}</paper>                                                    
+prompt2 = f"""Here is an academic paper: <paper>{text}</paper>                                                    
                                                                                                                    
                         Please do the following:                                                                     
                                                                                                                      
