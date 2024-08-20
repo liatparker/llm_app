@@ -5,7 +5,6 @@ from openai import OpenAI
 import tiktoken
 from tqdm import tqdm
 from anthropic import Anthropic
-
 import pandas as pd
 
 
@@ -27,27 +26,27 @@ st.title('🦜🔗 Text Summarization App')
 
 uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")
-
-
-def create_messages(prompts):
-
-    summaries= []
-
-    for prompt in prompts :
-        message = {"role": 'user', "content": prompt
-             }
-        summaries.append(message)
-    return summaries
-def get_completion(client, prompts):
-
-
-    client = Anthropic(api_key=anthropic_api_key)
-    MODEL_NAME = 'claude-3-5-sonnet-20240620'
+def get_completion(client, prompt):
     return client.messages.create(
         model=MODEL_NAME,
         max_tokens=4096,
-        messages= create_messages(prompts)
+        messages=[{
+            "role": 'user', "content":  prompt
+        }]
     ).content[0].text
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -75,20 +74,23 @@ def get_completion(client, prompts):
 client = Anthropic()
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
-if uploaded_file is not None:
-    reader = PdfReader(uploaded_file)
-    text = ''.join(page.extract_text() for page in reader.pages)
+
+reader = PdfReader(uploaded_file)
+text = ''.join(page.extract_text() for page in reader.pages)
+
 prompt1 = f"""Here is an academic paper: <paper>{text}</paper>
 
                        Please do the following:
 
-                       Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)"""
+            point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)"""
 
-prompt2 = f"""Here is an academic paper: <paper>{text}</paper>
+prompt2 = f"""Here is an academic paper: <paper>{text}</paper>                                                    
+                                                                                                                   
+                        Please do the following:                                                                     
+                                                                                                                     
+             point form and focus on major sections (<extract summary>)"""
 
-                                    Please do the following:
 
-                                    Write in bullet point form and focus on major sections (<extract summary>)"""
 
 
 
