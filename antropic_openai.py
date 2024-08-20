@@ -75,41 +75,47 @@ def get_completion(client, prompts):
 client = Anthropic()
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
-
-
 if uploaded_file is not None:
     reader = PdfReader(uploaded_file)
-    text1 = ''.join(page.extract_text() for page in reader.pages)
-def custom_prompt():
-    if uploaded_file is not None:
-        reader = PdfReader(uploaded_file)
-        text = ''.join(page.extract_text() for page in reader.pages)
-        prompts = [
-                  f"""Here is an academic paper: <paper>{text}</paper>
+    text = ''.join(page.extract_text() for page in reader.pages)
+prompt1 = f"""Here is an academic paper: <paper>{text}</paper>
 
-                               Please do the following:
+                       Please do the following:
 
-                               Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
-                  f"""Here is an academic paper: <paper>{text}</paper>
+                       Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)"""
 
-                                            Please do the following:
+prompt2 = f"""Here is an academic paper: <paper>{text}</paper>
 
-                                            Write in bullet point form and focus on major sections (<extract summary>)"""]
-        return prompts
+                                    Please do the following:
+
+                                    Write in bullet point form and focus on major sections (<extract summary>)"""
 
 
-custom_prompt = custom_prompt()
+
+
+
+
+
+
+
 result = []
 with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
-    submitted = st.form_submit_button('Submit')
-    if submitted and anthropic_api_key.startswith('sk-'):
+    txt_input1 = st.text_area('summary focused on hypothesis, methodology, results and conclusions', '', height=200)
+    submitted1 = st.form_submit_button('submit')
+    txt_input2 = st.text_area('summary focused on major sections ', '', height=200)
+    submitted2 = st.form_submit_button('Submit')
+
+    if submitted1 and anthropic_api_key.startswith('sk-') :
         with st.spinner('Calculating...'):
-                response = get_completion(client, custom_prompt)
+                response = get_completion(client, prompt1)
                 result.append(response)
                 del anthropic_api_key
-
-
+    if submitted2 and anthropic_api_key.startswith('sk-') :
+        with st.spinner('Calculating...'):
+                response = get_completion(client, prompt2)
+                result.append(response)
+                del anthropic_api_key
 
 
 
