@@ -26,34 +26,16 @@ st.title('🦜🔗 Text Summarization App')
 uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")
 
-if uploaded_file is not None:
-    text = ""
-    reader = PdfReader(uploaded_file)
-    for page in reader.pages:
-        text += page.extract_text()
-
-prompts = [
 
 
 
-        f"""Here is an academic paper: <paper>{text}</paper>
-
-                                   Please do the following:
-
-                                   Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
-        f"""Here is an academic paper: <paper>{text}</paper>
-
-                                                Please do the following:
-
-                                                Write in bullet point form and focus on major sections (<extract summary>)"""]
 def create_messages(prompts):
     summaries= []
-
     for prompt in prompts :
         message = {"role": 'user', "content": prompt
              }
         summaries.append(message)
-        return summaries
+    return summaries
 def get_completion(client, prompts):
 
     client = Anthropic(api_key=anthropic_api_key)
@@ -92,6 +74,11 @@ client = Anthropic()
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 result = []
 
+if uploaded_file is not None:
+    text = ""
+    reader = PdfReader(uploaded_file)
+    for page in reader.pages:
+        text += page.extract_text()
 prompts = [
     f"""Here is an academic paper: <paper>{text}</paper>
 
