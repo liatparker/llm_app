@@ -77,7 +77,7 @@ if uploaded_file is not None:
     # Extract the content
     text= ''
     for page in pdf_reader.pages:
-        text += page.extract_text
+        text += page.extract_text()
 
 
 
