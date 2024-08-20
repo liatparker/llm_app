@@ -26,6 +26,9 @@ st.title('🦜🔗 Text Summarization App')
 
 uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")
+
+
+
 def get_completion(client, prompt):
     return client.messages.create(
         model=MODEL_NAME,
@@ -36,15 +39,13 @@ def get_completion(client, prompt):
     ).content[0].text
 
 
-
-
-
-
-
-
-
-
-
+if uploaded_file is not None:
+    # Read the PDF file
+    pdf_reader = PdfReader(uploaded_file)
+    # Extract the content
+    text= ''
+    for page in pdf_reader.pages:
+        text += page.extract_text
 
 
 
@@ -75,8 +76,8 @@ client = Anthropic()
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
-reader = PdfReader(uploaded_file)
-text = ''.join(page.extract_text() for page in reader.pages)
+
+
 
 prompt1 = f"""Here is an academic paper: <paper>{text}</paper>
 
