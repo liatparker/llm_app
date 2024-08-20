@@ -82,7 +82,7 @@ client = Anthropic()
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 result = []
-
+summaries = []
 with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
     submitted = st.form_submit_button('Submit')
@@ -101,15 +101,17 @@ with st.form('summarize_form', clear_on_submit=True):
                                                         Write in point form and focus on major sections (<extract summary>)"""]
 
 
-            summaries = []
+
             for prompt in prompts:
                 response = get_completion(client, prompt= prompt)
-            summaries.append(response)
-            result.append(summaries)
-
+            result.append(response)
+            summaries.append((result))
             del anthropic_api_key
+
+
+
 if len(result):
-    st.info(response)
+    st.info(summaries)
 
 # result1 = []
 # with st.form('summarize_form1', clear_on_submit=True):
