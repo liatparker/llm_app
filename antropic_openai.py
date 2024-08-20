@@ -78,14 +78,18 @@ client = Anthropic()
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
-
-if uploaded_file is not None:
+def text (uploaded_file):
+   if uploaded_file is not None:
     # Read the PDF file
-    pdf_reader = PdfReader(uploaded_file)
+        pdf_reader = PdfReader(uploaded_file)
     # Extract the content
-    text= ''
-    for page in pdf_reader.pages:
-        text += page.extract_text()
+        content= ''
+        for page in pdf_reader.pages:
+            content += page.extract_text()
+        return content
+
+
+text = text(uploaded_file)
 
 
 
