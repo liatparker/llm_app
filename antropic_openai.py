@@ -19,12 +19,7 @@ import pandas as pd
 #MODEL_NAME = "claude-3-opus-20240229"
 #MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
-# Page title
-st.set_page_config(page_title='🦜🔗 Text Summarization App')
-st.title('🦜🔗 Text Summarization App')
 
-uploaded_file = st.file_uploader(
-    "upload pdf file", type="pdf")
 
 
 
@@ -47,7 +42,12 @@ def get_completion(client, prompts):
     ).content[0].text
 
 
+# Page title
+st.set_page_config(page_title='🦜🔗 Text Summarization App')
+st.title('🦜🔗 Text Summarization App')
 
+uploaded_file = st.file_uploader(
+    "upload pdf file", type="pdf")
 
 # Text input
 
@@ -56,7 +56,7 @@ def get_completion(client, prompts):
 # uploaded_file = st.file_uploader(
 #     "upload pdf file", type="pdf")#, accept_multiple_files=True)
 
-import streamlit as st
+
 
 
 
