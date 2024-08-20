@@ -39,13 +39,7 @@ def get_completion(client, prompt):
     ).content[0].text
 
 
-if uploaded_file is not None:
-    # Read the PDF file
-    pdf_reader = PdfReader(uploaded_file)
-    # Extract the content
-    text= ''
-    for page in pdf_reader.pages:
-        text += page.extract_text
+
 
 
 
@@ -77,15 +71,24 @@ client = Anthropic()
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
 
+if uploaded_file is not None:
+    # Read the PDF file
+    pdf_reader = PdfReader(uploaded_file)
+    # Extract the content
+    text= ''
+    for page in pdf_reader.pages:
+        text += page.extract_text
 
 
-prompt1 = f"""Here is an academic paper: <paper>{text}</paper>
+
+
+        prompt1 = f"""Here is an academic paper: <paper>{text}</paper>
 
                        Please do the following:
 
             point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)"""
 
-prompt2 = f"""Here is an academic paper: <paper>{text}</paper>                                                    
+        prompt2 = f"""Here is an academic paper: <paper>{text}</paper>                                                    
                                                                                                                    
                         Please do the following:                                                                     
                                                                                                                      
