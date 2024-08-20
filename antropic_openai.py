@@ -38,22 +38,8 @@ def create_messages(prompts):
              }
         summaries.append(message)
     return summaries
-def get_completion(client, prompts,text):
-    if uploaded_file is not None:
-        reader = PdfReader(uploaded_file)
-        text = ''.join(page.extract_text() for page in reader.pages)
-        print(text)
-    prompts = [
-        f"""Here is an academic paper: <paper>{text}</paper>
+def get_completion(client, prompts):
 
-                                   Please do the following:
-
-                                   Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
-        f"""Here is an academic paper: <paper>{text}</paper>
-
-                                                Please do the following:
-
-                                                Write in bullet point form and focus on major sections (<extract summary>)"""]
 
     client = Anthropic(api_key=anthropic_api_key)
     MODEL_NAME = 'claude-3-5-sonnet-20240620'
@@ -90,7 +76,21 @@ client = Anthropic()
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 result = []
+if uploaded_file is not None:
+    reader = PdfReader(uploaded_file)
+    text = ''.join(page.extract_text() for page in reader.pages)
+    print(text)
+prompts = [
+    f"""Here is an academic paper: <paper>{text}</paper>
 
+                               Please do the following:
+
+                               Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
+    f"""Here is an academic paper: <paper>{text}</paper>
+
+                                            Please do the following:
+
+                                            Write in bullet point form and focus on major sections (<extract summary>)"""]
 
 
 with st.form('summarize_form', clear_on_submit=True):
