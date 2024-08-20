@@ -128,6 +128,7 @@ with st.form('summarize_form', clear_on_submit=True):
                 result.append(response)
                 del anthropic_api_key
 if len(result):
+    st.info(result)
     with st.form('summarize_form1', clear_on_submit=True):
         anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
         txt_input2 = st.text_area('summary focused on major sections ', '', height=200)
