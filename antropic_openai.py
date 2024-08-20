@@ -11,8 +11,8 @@ import pandas as pd
 # reader = PdfReader("/Users/Liatparker/downloads/attention_is_all_you_need.pdf")
 # number_of_pages = len(reader.pages)
 # text = ''.join(page.extract_text() for page in reader.pages)
-#anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY')
-#os.environ['ANTHROPIC_API_KEY'] = anthropic_api_key
+anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY')
+# os.environ['ANTHROPIC_API_KEY'] = anthropic_api_key
 client = Anthropic(api_key= anthropic_api_key)
 #os.environ.get('ANTHROPIC_API_KEY', anthropic_api_key)
 #MODEL_NAME = "claude-3-opus-20240229"
@@ -38,7 +38,6 @@ if uploaded_file is not None:
 
 
 def get_completion(client, prompt):
-    client = Anthropic(api_key= anthropic_api_key)
     return client.messages.create(
         model=MODEL_NAME,
         max_tokens=4096,
@@ -75,7 +74,7 @@ def get_completion(client, prompt):
 
 
 
-client = Anthropic()
+
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
