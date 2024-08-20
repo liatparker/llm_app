@@ -75,30 +75,35 @@ def get_completion(client, prompts):
 client = Anthropic()
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
-result = []
+
+
 if uploaded_file is not None:
     reader = PdfReader(uploaded_file)
-    text = ''.join(page.extract_text() for page in reader.pages)
-    print(text)
-prompts = [
-    f"""Here is an academic paper: <paper>{text}</paper>
+    text1 = ''.join(page.extract_text() for page in reader.pages)
+def custom_prompt(text):
+
+    prompts = [
+                  f"""Here is an academic paper: <paper>{text}</paper>
 
                                Please do the following:
 
                                Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
-    f"""Here is an academic paper: <paper>{text}</paper>
+                  f"""Here is an academic paper: <paper>{text}</paper>
 
                                             Please do the following:
 
                                             Write in bullet point form and focus on major sections (<extract summary>)"""]
+    return prompts
 
 
+custom_prompt = custom_prompt(text1)
+result = []
 with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-                response = get_completion(client, prompts)
+                response = get_completion(client, custom_prompt)
                 result.append(response)
                 del anthropic_api_key
 
