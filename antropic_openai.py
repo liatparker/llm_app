@@ -107,7 +107,7 @@ with st.form('summarize_form', clear_on_submit=True):
                 result.append(response)
                 st.write("\n")
                 #summaries.append((result))
-                del anthropic_api_key
+            del anthropic_api_key
 
 
 
