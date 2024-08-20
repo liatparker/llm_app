@@ -79,9 +79,6 @@ client = Anthropic()
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
 
-uploaded_file = st.file_uploader(
-    "upload pdf file", type="pdf")
-
 if uploaded_file is not None:
     # Read the PDF file
     pdf_reader = PdfReader(uploaded_file)
