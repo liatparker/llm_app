@@ -19,16 +19,24 @@ import pandas as pd
 #MODEL_NAME = "claude-3-opus-20240229"
 #MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
-
-def get_completion(client, prompt):
+def create_messages(prompts):
+    summaries= []
+    for prompt in prompts :
+        message = {"role": 'user', "content": prompt
+             }
+        summaries.append(message)
+        return summaries
+def get_completion(client, prompts):
     client = Anthropic(api_key=anthropic_api_key)
     MODEL_NAME = 'claude-3-5-sonnet-20240620'
     return client.messages.create(
         model=MODEL_NAME,
         max_tokens=4096,
-    messages=[{
-            "role": 'user', "content":  prompt
-        }]
+
+    # messages=[
+    # { "role": 'user', "content":  prompt
+    #     }]
+    messages= create_messages(prompts)
     ).content[0].text
 
 # completion1 = get_completion(client,
@@ -82,32 +90,32 @@ client = Anthropic()
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 result = []
-summaries = []
+
+prompts = [
+    f"""Here is an academic paper: <paper>{text}</paper>
+
+                               Please do the following:
+
+                               Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
+    f"""Here is an academic paper: <paper>{text}</paper>
+
+                                            Please do the following:
+
+                                            Write in bullet point form and focus on major sections (<extract summary>)"""]
+
 with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            prompts = [
-                                         f"""Here is an academic paper: <paper>{text}</paper>
 
-                                           Please do the following:
-
-                                           Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
-                                         f"""Here is an academic paper: <paper>{text}</paper>
-
-                                                        Please do the following:
-
-                                                        Write in bullet point form and focus on major sections (<extract summary>)"""]
-
-
-
-            for prompt in prompts:
-                response = get_completion(client, prompt= prompt)
+                response = get_completion(client, prompt= prompts)
                 result.append(response)
+                del anthropic_api_key
 
 
-            del anthropic_api_key
+
+
 
 
 
