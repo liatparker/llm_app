@@ -19,47 +19,40 @@ import pandas as pd
 #MODEL_NAME = "claude-3-opus-20240229"
 #MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
+uploaded_file = st.file_uploader(
+    "upload pdf file", type="pdf")
 def create_messages(prompts):
     summaries= []
+    if uploaded_file is not None:
+        text = ""
+        reader = PdfReader(uploaded_file)
+        for page in reader.pages:
+            text += page.extract_text()
+    prompts = [
+        f"""Here is an academic paper: <paper>{text}</paper>
+
+                                   Please do the following:
+
+                                   Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
+        f"""Here is an academic paper: <paper>{text}</paper>
+
+                                                Please do the following:
+
+                                                Write in bullet point form and focus on major sections (<extract summary>)"""]
     for prompt in prompts :
         message = {"role": 'user', "content": prompt
              }
         summaries.append(message)
         return summaries
 def get_completion(client, prompts):
+
     client = Anthropic(api_key=anthropic_api_key)
     MODEL_NAME = 'claude-3-5-sonnet-20240620'
     return client.messages.create(
         model=MODEL_NAME,
         max_tokens=4096,
-
-    # messages=[
-    # { "role": 'user', "content":  prompt
-    #     }]
-    messages= create_messages(prompts)
+        messages= create_messages(prompts)
     ).content[0].text
-
-# completion1 = get_completion(client,
-#     f"""Here is an academic paper: <paper>{text}</paper>
-#
-# Please do the following:
-#
-#  Write in point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)
-#
-# """
-# )
-#
-# completion2 = get_completion(client,
-#     f"""Here is an academic paper: <paper>{text}</paper>
-#
-# Please do the following:
-#
-#  Write summary in bullets form  focus on subtitles (<extract summary>)
-#
-#
-# """
-# )
-# print(completion1,completion2)
 
 
 # Page title
@@ -70,18 +63,18 @@ st.title('🦜🔗 Text Summarization App')
 
 #txt_input = st.text_area('upload your pdf file', '', height=200)
 
-uploaded_file = st.file_uploader(
-    "upload pdf file", type="pdf")#, accept_multiple_files=True)
+# uploaded_file = st.file_uploader(
+#     "upload pdf file", type="pdf")#, accept_multiple_files=True)
 
 import streamlit as st
 
 
 
-if uploaded_file is not None:
-    text = ""
-    reader = PdfReader(uploaded_file)
-    for page in reader.pages:
-        text += page.extract_text()
+# if uploaded_file is not None:
+#     text = ""
+#     reader = PdfReader(uploaded_file)
+#     for page in reader.pages:
+#         text += page.extract_text()
 
 
 
@@ -108,8 +101,7 @@ with st.form('summarize_form', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-
-                response = get_completion(client, prompt= prompts)
+                response = get_completion(client, prompts)
                 result.append(response)
                 del anthropic_api_key
 
