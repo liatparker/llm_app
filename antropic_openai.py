@@ -30,8 +30,7 @@ if uploaded_file is not None:
     reader = PdfReader(uploaded_file)
     for page in reader.pages:
         text += page.extract_text()
-def create_messages(prompts):
-    summaries= []
+
     prompts = [
         f"""Here is an academic paper: <paper>{text}</paper>
 
@@ -43,6 +42,9 @@ def create_messages(prompts):
                                                 Please do the following:
 
                                                 Write in bullet point form and focus on major sections (<extract summary>)"""]
+def create_messages(prompts):
+    summaries= []
+
     for prompt in prompts :
         message = {"role": 'user', "content": prompt
              }
