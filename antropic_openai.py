@@ -69,7 +69,7 @@ if len(result):
 
 result1 = []
 
-txt_input = st.text_input('please write your own critiria for a summary', '', height=200)
+txt_input = st.text_input('please write your own critiria for a summary',key="widget")
 submitted1 = st.form_submit_button('Submit')
 if submitted1 and anthropic_api_key.startswith('sk-'):
     with st.spinner('Calculating...'):
