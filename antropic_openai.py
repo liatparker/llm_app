@@ -28,8 +28,8 @@ def get_completion(client, prompt):
 
 
 # Page title
-st.set_page_config(page_title='🦜🔗 Text Summarization App')
-st.title('🦜🔗 Text Summarization App')
+st.set_page_config(page_title=' Pdf paper Summarization/chat App')
+st.title(' Pdf paper App')
 
 # Text input
 
@@ -49,6 +49,7 @@ MODEL_NAME = 'claude-3-5-sonnet-20240620'
 result = []
 with st.form('summarize_form', clear_on_submit=False):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
+    st.title("summary focused on hypothesis, methodology, results, and conclusions")
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
@@ -67,24 +68,63 @@ with st.form('summarize_form', clear_on_submit=False):
 if len(result):
     st.info(response)
 
+# result1 = []
+# with st.form('summarize_form1', clear_on_submit=False):
+#     txt_input = st.text_input('please write your own critiria for a summary',key="widget")
+#     submitted1 = st.form_submit_button('Submit')
+#     if submitted1 and anthropic_api_key.startswith('sk-'):
+#         with st.spinner('Calculating...'):
+#             response1 = get_completion(client = Anthropic(api_key=anthropic_api_key)  ,prompt= (
+#                                          f"""Here is an academic paper: <paper>{text}</paper>
+#                                            Please do the following:{txt_input}
+#
+#                                            """
+#                                            #2. Write in bullet point form and focus on major sections (<extract summary2>)"""
+#
+#
+#                                         ))
+#
+#             result1.append(response1)
+#             del anthropic_api_key
+# if len(result1):
+#     st.info(response1)
+
 result1 = []
 with st.form('summarize_form1', clear_on_submit=False):
-    txt_input = st.text_input('please write your own critiria for a summary',key="widget")
+    anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
+    st.title("summary focused on major sections")
     submitted1 = st.form_submit_button('Submit')
     if submitted1 and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-            response1 = get_completion(client = Anthropic(api_key=anthropic_api_key)  ,prompt= (
-                                         f"""Here is an academic paper: <paper>{text}</paper>
-                                           Please do the following:{txt_input}
-                                           
-                                           """
-                                           #2. Write in bullet point form and focus on major sections (<extract summary2>)"""
-
-
-                                        ))
+            response1 = get_completion(client=Anthropic(api_key=anthropic_api_key), prompt=(
+                f"""Here is an academic paper: <paper>{text}</paper>
+                                            Please do the following:
+                                            1.Write in bullet point form and focus on major sections (<extract summary2>) 
+                                            """
+            ))
 
             result1.append(response1)
             del anthropic_api_key
 if len(result1):
     st.info(response1)
+
+result2 = []
+with st.form('summarize_form2', clear_on_submit=False):
+    txt_input = st.text_input('please write your own critiria for a summary or ask anything about the paper you uploaded', key="widget")
+    submitted2 = st.form_submit_button('Submit')
+    if submitted2 and anthropic_api_key.startswith('sk-'):
+        with st.spinner('Calculating...'):
+            response2 = get_completion(client=Anthropic(api_key=anthropic_api_key), prompt=(
+                f"""Here is an academic paper: <paper>{text}</paper>
+                                            Please do the following:{txt_input}
+
+                                            """
+
+
+            ))
+
+            result2.append(response2)
+            del anthropic_api_key
+if len(result2):
+    st.info(response2)
 
