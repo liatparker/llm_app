@@ -49,7 +49,7 @@ MODEL_NAME = 'claude-3-5-sonnet-20240620'
 result = []
 with st.form('summarize_form', clear_on_submit=False):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
-    st.header("summary focused on hypothesis, methodology, results, and conclusions")
+    txt_input = st.text_input("summary focused on hypothesis, methodology, results, and conclusions")
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
@@ -91,7 +91,7 @@ if len(result):
 
 result1 = []
 with st.form('summarize_form1', clear_on_submit=False):
-    st.header("summary focused on major sections")
+    txt_input = st.text_input("summary focused on major sections")
     submitted1 = st.form_submit_button('Submit')
     if submitted1 and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
