@@ -65,10 +65,9 @@ uploaded_file = st.file_uploader(
 # Form to accept user's text input for summarization
 
 
-with open(uploaded_file.name, mode='wb') as w:
-    w.write(uploaded_file.getvalue())
+
 if uploaded_file:  # check if path is not None
-    reader = PdfReader(uploaded_file.name)
+    reader = PdfReader(uploaded_file)
     text = ''.join(page.extract_text() for page in reader.pages)
 
 
