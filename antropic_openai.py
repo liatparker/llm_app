@@ -47,7 +47,7 @@ if uploaded_file:  # check if path is not None
 
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 result = []
-with st.form('summarize_form', clear_on_submit=True):
+with st.form('summarize_form', clear_on_submit=False):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
@@ -55,9 +55,9 @@ with st.form('summarize_form', clear_on_submit=True):
              response = get_completion(client = Anthropic(api_key=anthropic_api_key)  ,prompt= (
                                          f"""Here is an academic paper: <paper>{text}</paper>
                                            Please do the following:
-                                           1.Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary1>)
-                                       
-                                           2. Write in bullet point form and focus on major sections (<extract summary2>)"""
+                                           1.Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)
+                                           """
+                                           #2. Write in bullet point form and focus on major sections (<extract summary2>)"""
 
 
                                         ))
