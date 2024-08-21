@@ -5,7 +5,6 @@ from openai import OpenAI
 import tiktoken
 from tqdm import tqdm
 from anthropic import Anthropic
-from transformers import GPT2TokenizerFast
 import pandas as pd
 
 
