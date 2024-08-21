@@ -56,7 +56,7 @@ with st.form('summarize_form', clear_on_submit=False):
              response = get_completion(client = Anthropic(api_key=anthropic_api_key)  ,prompt= (
                                          f"""Here is an academic paper: <paper>{text}</paper>
                                            Please do the following:
-                                           1.Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)
+                                           1.Write in bullet point form and focus on hypothesis, methodology, results, and conclusions 
                                            """
                                            #2. Write in bullet point form and focus on major sections (<extract summary2>)"""
 
@@ -68,37 +68,35 @@ with st.form('summarize_form', clear_on_submit=False):
 if len(result):
     st.info(response)
 
-# result1 = []
-# with st.form('summarize_form1', clear_on_submit=False):
-#     txt_input = st.text_input('please write your own critiria for a summary',key="widget")
-#     submitted1 = st.form_submit_button('Submit')
-#     if submitted1 and anthropic_api_key.startswith('sk-'):
-#         with st.spinner('Calculating...'):
-#             response1 = get_completion(client = Anthropic(api_key=anthropic_api_key)  ,prompt= (
-#                                          f"""Here is an academic paper: <paper>{text}</paper>
-#                                            Please do the following:{txt_input}
-#
-#                                            """
-#                                            #2. Write in bullet point form and focus on major sections (<extract summary2>)"""
-#
-#
-#                                         ))
-#
-#             result1.append(response1)
-#             del anthropic_api_key
-# if len(result1):
-#     st.info(response1)
+result0 = []
+with st.form('summarize_form1', clear_on_submit=False):
+    txt_input = st.text_input("summary focused on major sections")
+    submitted0 = st.form_submit_button('Submit')
+    if submitted0 and anthropic_api_key.startswith('sk-'):
+        with st.spinner('Calculating...'):
+            response0 = get_completion(client=Anthropic(api_key=anthropic_api_key), prompt=(
+                f"""Here is an academic paper: <paper>{text}</paper>
+                                            Please do the following:
+                                            Write in bullet point form and focus on major sections  
+                                            """
+            ))
+
+            result0.append(response0)
+            del anthropic_api_key
+if len(result0):
+    st.info(response0)
 
 result1 = []
 with st.form('summarize_form1', clear_on_submit=False):
-    txt_input = st.text_input("summary focused on major sections")
+    txt_input = st.text_input("summary focused on architecture of the model ")
     submitted1 = st.form_submit_button('Submit')
     if submitted1 and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
             response1 = get_completion(client=Anthropic(api_key=anthropic_api_key), prompt=(
                 f"""Here is an academic paper: <paper>{text}</paper>
                                             Please do the following:
-                                            1.Write in bullet point form and focus on major sections (<extract summary2>) 
+                                            1.(<extract summary2>) 
+                                            Write in bullet point form what is the architecture of the model 
                                             """
             ))
 
