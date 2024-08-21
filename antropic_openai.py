@@ -1,6 +1,5 @@
 import streamlit as st
 from pypdf import PdfReader
-import PyPDF2
 from openai import OpenAI
 import tiktoken
 from tqdm import tqdm
@@ -26,27 +25,6 @@ def get_completion(client, prompt):
         }]
     ).content[0].text
 
-# completion1 = get_completion(client,
-#     f"""Here is an academic paper: <paper>{text}</paper>
-#
-# Please do the following:
-#
-#  Write in point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)
-#
-# """
-# )
-#
-# completion2 = get_completion(client,
-#     f"""Here is an academic paper: <paper>{text}</paper>
-#
-# Please do the following:
-#
-#  Write summary in bullets form  focus on subtitles (<extract summary>)
-#
-#
-# """
-# )
-# print(completion1,completion2)
 
 
 # Page title
@@ -61,17 +39,9 @@ uploaded_file = st.file_uploader(
     "upload pdf file", type="pdf")#, accept_multiple_files=True)
 
 
-# Form to accept user's text input for summarization
-
-
-
 if uploaded_file:  # check if path is not None
     reader = PdfReader(uploaded_file)
     text = ''.join(page.extract_text() for page in reader.pages)
-
-
-
-
 
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
