@@ -95,8 +95,8 @@ with st.form('summarize_form1', clear_on_submit=False):
             response1 = get_completion(client=Anthropic(api_key=anthropic_api_key), prompt=(
                 f"""Here is an academic paper: <paper>{text}</paper>
                                             Please do the following:
-                                            1.(<extract summary2>) 
-                                            Write in bullet point form what is the architecture of the model 
+                                            
+                                             what is the architecture of the model 
                                             """
             ))
 
