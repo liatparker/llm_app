@@ -94,16 +94,15 @@ text = text(uploaded_file)
 
 
 
-prompt1 = f"""Here is an academic paper: <paper>{text}</paper>
+prompt = f"""Here is an academic paper: <paper>{text}</paper>
 
                        Please do the following:
 
-            point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)"""
-prompt2 = f"""Here is an academic paper: <paper>{text}</paper>                                                    
-                                                                                                                   
-                        Please do the following:                                                                     
-                                                                                                                     
-             point form and focus on major sections (<extract summary>)"""
+            1.write summary in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary1>)
+            2. write summary in bullet point form and focus on major sections  (<extract summary2>)
+            
+"""
+
 
 
 
@@ -118,29 +117,14 @@ prompt2 = f"""Here is an academic paper: <paper>{text}</paper>
 result = []
 with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
-    submitted1 = st.form_submit_button('submit')
-    txt_input1 = st.text_area('summary focused on hypothesis, methodology, results and conclusions', '', height=200)
+    submitted = st.form_submit_button('submit')
 
-    if submitted1 and anthropic_api_key.startswith('sk-') :
+    if submitted and anthropic_api_key.startswith('sk-') :
         with st.spinner('Calculating...'):
-                response = get_completion(client, prompt1)
+                response = get_completion(client, prompt)
                 result.append(response)
                 del anthropic_api_key
-if len(result):
-    st.info(result)
-with st.form('summarize_form1', clear_on_submit=True):
-    anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
-    txt_input2 = st.text_area('summary focused on major sections ', '', height=200)
-    submitted2 = st.form_submit_button('Submit')
 
-    if submitted2 and anthropic_api_key.startswith('sk-'):
-        with st.spinner('Calculating...'):
-            response2 = get_completion(client, prompt2)
-            result.append(response2)
-            del anthropic_api_key
-
-if len(result):
-    st.info(result)
 
 # result1 = []
 # with st.form('summarize_form1', clear_on_submit=True):
