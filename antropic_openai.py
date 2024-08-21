@@ -11,7 +11,7 @@ import pandas as pd
 # number_of_pages = len(reader.pages)
 # text = ''.join(page.extract_text() for page in reader.pages)
 #
-client = Anthropic()
+
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
@@ -44,7 +44,7 @@ if uploaded_file:  # check if path is not None
     text = ''.join(page.extract_text() for page in reader.pages)
 
 #MODEL_NAME = "claude-3-opus-20240229"
-client = Anthropic()
+
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
 result = []
 with st.form('summarize_form', clear_on_submit=True):
@@ -52,7 +52,7 @@ with st.form('summarize_form', clear_on_submit=True):
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-             response = get_completion(client ,prompt= (
+             response = get_completion(client = Anthropic(api_key=anthropic_api_key)  ,prompt= (
                                          f"""Here is an academic paper: <paper>{text}</paper>
                                            Please do the following:
                                            1.Write in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary1>)
