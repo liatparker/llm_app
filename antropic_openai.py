@@ -1,44 +1,24 @@
 import streamlit as st
 from pypdf import PdfReader
-import os
+import PyPDF2
 from openai import OpenAI
 import tiktoken
 from tqdm import tqdm
 from anthropic import Anthropic
+from transformers import GPT2TokenizerFast
 import pandas as pd
 
 
 # reader = PdfReader("/Users/Liatparker/downloads/attention_is_all_you_need.pdf")
 # number_of_pages = len(reader.pages)
 # text = ''.join(page.extract_text() for page in reader.pages)
-#anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY')
-# os.environ['ANTHROPIC_API_KEY'] = anthropic_api_key
-#client = Anthropic(api_key= anthropic_api_key)
-#os.environ.get('ANTHROPIC_API_KEY', anthropic_api_key)
+#
+client = Anthropic()
 #MODEL_NAME = "claude-3-opus-20240229"
-#MODEL_NAME = 'claude-3-5-sonnet-20240620'
-
-
-
-# Page title
-st.set_page_config(page_title='🦜🔗 Text Summarization App')
-st.title('🦜🔗 Text Summarization App')
-
-uploaded_file = st.file_uploader(
-    "upload pdf file", type="pdf")
-
-if uploaded_file is not None:
-    # Read the PDF file
-    pdf_reader = PdfReader(uploaded_file)
-    # Extract the content
-    text= ''
-    for page in pdf_reader.pages:
-        text += page.extract_text()
-
+MODEL_NAME = 'claude-3-5-sonnet-20240620'
 
 
 def get_completion(client, prompt):
-    client = Anthropic(api_key=anthropic_api_key)
     return client.messages.create(
         model=MODEL_NAME,
         max_tokens=4096,
@@ -47,30 +27,49 @@ def get_completion(client, prompt):
         }]
     ).content[0].text
 
+# completion1 = get_completion(client,
+#     f"""Here is an academic paper: <paper>{text}</paper>
+#
+# Please do the following:
+#
+#  Write in point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)
+#
+# """
+# )
+#
+# completion2 = get_completion(client,
+#     f"""Here is an academic paper: <paper>{text}</paper>
+#
+# Please do the following:
+#
+#  Write summary in bullets form  focus on subtitles (<extract summary>)
+#
+#
+# """
+# )
+# print(completion1,completion2)
 
 
-
-
-
-
-
+# Page title
+st.set_page_config(page_title='🦜🔗 Text Summarization App')
+st.title('🦜🔗 Text Summarization App')
 
 # Text input
 
 #txt_input = st.text_area('upload your pdf file', '', height=200)
 
-# uploaded_file = st.file_uploader(
-#     "upload pdf file", type="pdf")#, accept_multiple_files=True)
+uploaded_file = st.file_uploader(
+    "upload pdf file", type="pdf")#, accept_multiple_files=True)
 
 
+# Form to accept user's text input for summarization
 
 
-
-# if uploaded_file is not None:
-#     text = ""
-#     reader = PdfReader(uploaded_file)
-#     for page in reader.pages:
-#         text += page.extract_text()
+with open(uploaded_file.name, mode='wb') as w:
+    w.write(uploaded_file.getvalue())
+if uploaded_file:  # check if path is not None
+    reader = PdfReader(uploaded_file.name)
+    text = ''.join(page.extract_text() for page in reader.pages)
 
 
 
@@ -78,66 +77,25 @@ def get_completion(client, prompt):
 
 #MODEL_NAME = "claude-3-opus-20240229"
 MODEL_NAME = 'claude-3-5-sonnet-20240620'
-
-def text (uploaded_file):
-   if uploaded_file is not None:
-    # Read the PDF file
-        pdf_reader = PdfReader(uploaded_file)
-    # Extract the content
-        content= ''
-        for page in pdf_reader.pages:
-            content += page.extract_text()
-        return content
-
-
-text = text(uploaded_file)
-
-
-
-
-prompt = f"""Here is an academic paper: <paper>{text}</paper>
-
-                       Please do the following:
-
-            1.write summary in bullet point form and focus on hypothesis, methodology, results, and conclusions (<extract summary1>)
-            2. write summary in bullet point form and focus on major sections  (<extract summary2>)
-            
-"""
-
-
-
-
-
-
-
-
-
-
-
-
 result = []
 with st.form('summarize_form', clear_on_submit=True):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
-    submitted = st.form_submit_button('submit')
-
-    if submitted and anthropic_api_key.startswith('sk-') :
+    submitted = st.form_submit_button('Submit')
+    if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
-                response = get_completion(client, prompt)
-                result.append(response)
-                del anthropic_api_key
+             response = get_completion(client = Anthropic(),prompt= (
+                                         f"""Here is an academic paper: <paper>{text}</paper>
+                                           Please do the following:
+                                           Write in point form and focus on hypothesis, methodology, results, and conclusions (<extract summary>)""",
+                                         f"""Here is an academic paper: <paper>{text}</paper>
+                                                        Please do the following:
+                                                        Write in point form and focus on major sections (<extract summary>)"""
 
 
-# result1 = []
-# with st.form('summarize_form1', clear_on_submit=True):
-#     openai_api_key = st.text_input('OpenAI API Key', type = 'password')
-#     submitted = st.form_submit_button('Submit')
-#     if submitted and openai_api_key.startswith('sk-'):
-#         with st.spinner('Calculating...'):
-#             response1= summarize_pdfs_from_folder1(uploaded_file)
-#             #response = generate_response(txt_input )
-#             result1.append(response1)
-#             del openai_api_key
-#
-#
-# if len(result1):
-#     st.info(response1)
+                                        ))
+
+             result.append(response)
+             del anthropic_api_key
+if len(result):
+    st.info(response)
+
