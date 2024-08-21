@@ -69,7 +69,7 @@ if len(result):
     st.info(response)
 
 result0 = []
-with st.form('summarize_form1', clear_on_submit=False):
+with st.form('summarize_form0', clear_on_submit=False):
     txt_input = st.text_input("summary focused on major sections")
     submitted0 = st.form_submit_button('Submit')
     if submitted0 and anthropic_api_key.startswith('sk-'):
