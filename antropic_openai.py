@@ -282,7 +282,7 @@ with st.form('summarize_form3',clear_on_submit=False):
                     response3 = get_geval_score(criteria, steps, summary, eval_type,client = OpenAI(api_key= openai_api_key), text = text )
                     score_num = int(response3.strip())
                     data["Score"].append(score_num)
-                    pivot_df = pd.DataFrame(data, index=None).pivot(index="Evaluation Type", columns="Summary Type", values="Score")
+            pivot_df = pd.DataFrame(data, index=None).pivot(index="Evaluation Type", columns="Summary Type", values="Score")
 
 
 
