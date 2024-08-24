@@ -206,8 +206,8 @@ CONSISTENCY_SCORE_STEPS = """
 
 FLUENCY_SCORE_CRITERIA = """                                                                                                                                  
 (1-5): the quality of the summary in terms of grammar, spelling, punctuation, word choice, and sentence structure.                                     
-1: The summary has many errors that make it hard to understand or sound unnatural.                                                                                           
-5: The summary has few or no errors and is easy to read and follow.                                                                                     
+where  1  is for  summary that  has many errors that make it hard to understand or sound unnatural.                                                                                           
+and 5 is for summary that  has few or no errors and is easy to read and follow.                                                                                     
 """
 
 FLUENCY_SCORE_STEPS = """                                                                                                                                     
