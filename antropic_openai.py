@@ -217,7 +217,7 @@ Read the summary and evaluate its fluency based on the given criteria. Assign a 
 
 def get_geval_score(
 
-        criteria: str, steps: str, document: str, summary: str, metric_name: str, client
+        criteria: str, steps: str, document: str, summary: str, metric_name: str, client, text
 ):
     prompt = EVALUATION_PROMPT_TEMPLATE.format(
         criteria=criteria,
@@ -279,7 +279,7 @@ with st.form('summarize_form3',clear_on_submit=False):
                 for summ_type, summary in summary_result.items():
                     data["Evaluation Type"].append(eval_type)
                     data["Summary Type"].append(summ_type)
-                    response3 = get_geval_score(criteria, steps, text, summary, eval_type,client = OpenAI(api_key= openai_api_key) )
+                    response3 = get_geval_score(criteria, steps, summary, eval_type,client = OpenAI(api_key= openai_api_key), text = text )
                     score_num = int(response3.strip())
                     data["Score"].append(score_num)
 pivot_df = pd.DataFrame(data, index=None).pivot(index="Evaluation Type", columns="Summary Type", values="Score")
