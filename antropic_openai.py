@@ -287,7 +287,7 @@ with st.form('summarize_form3',clear_on_submit=False):
 
 
 
-           if len(pivot_df):
+            if len(pivot_df):
               st.info(pivot_df)
 
 
