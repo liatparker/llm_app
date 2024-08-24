@@ -217,7 +217,7 @@ Read the summary and evaluate its fluency based on the given criteria. Assign a 
 
 def get_geval_score(
 
-        criteria: str, steps: str, document: str, summary: str, metric_name: str, client, text
+        criteria: str, steps: str, summary: str, metric_name: str, client, document: str
 ):
     prompt = EVALUATION_PROMPT_TEMPLATE.format(
         criteria=criteria,
@@ -247,20 +247,20 @@ evaluation_metrics = {
 
 
 
-summary = st.text_area( label =' please enter the summary for evaluation' )
-summary_result = {"Summary 1": summary }
-data = {"Evaluation Type": [], "Summary Type": [], "Score": []}
-for eval_type, (criteria, steps) in evaluation_metrics.items():
-    for summ_type, summary in summary_result.items():
-        data["Evaluation Type"].append(eval_type)
-        data["Summary Type"].append(summ_type)
-        result = get_geval_score(criteria, steps, text, summary, eval_type)
-        score_num = int(result.strip())
-        data["Score"].append(score_num)
-
-        pivot_df = pd.DataFrame(data, index=None).pivot(
-        index="Evaluation Type", columns="Summary Type", values="Score"
-        )
+# summary = st.text_area( label =' please enter the summary for evaluation' )
+# summary_result = {"Summary 1": summary }
+# data = {"Evaluation Type": [], "Summary Type": [], "Score": []}
+# for eval_type, (criteria, steps) in evaluation_metrics.items():
+#     for summ_type, summary in summary_result.items():
+#         data["Evaluation Type"].append(eval_type)
+#         data["Summary Type"].append(summ_type)
+#         result = get_geval_score(criteria, steps, summary, eval_type, text)
+#         score_num = int(result.strip())
+#         data["Score"].append(score_num)
+#
+#         pivot_df = pd.DataFrame(data, index=None).pivot(
+#         index="Evaluation Type", columns="Summary Type", values="Score"
+#         )
 #styled_pivot_df = pivot_df.style.highlight_max
 
 
