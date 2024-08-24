@@ -268,7 +268,7 @@ evaluation_metrics = {
 with st.form('summarize_form3',clear_on_submit=False):
     openai_api_key = st.text_input('OpenAI API Key', type='password')
     summary = st.text_area(label=' please enter the summary for evaluation')
-    submitted3 = st.form_submit_button('Submit', clear_on_submit=False )
+    submitted3 = st.form_submit_button('Submit')
     if submitted3 and openai_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
 
