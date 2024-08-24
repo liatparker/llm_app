@@ -217,7 +217,7 @@ Read the summary and evaluate its fluency based on the given criteria. Assign a 
 
 def get_geval_score(
 
-        criteria: str, steps: str, summary: str, metric_name: str, client, document: str
+        criteria: str, steps: str, document: str, summary: str, metric_name: str, client
 ):
     prompt = EVALUATION_PROMPT_TEMPLATE.format(
         criteria=criteria,
@@ -266,6 +266,7 @@ evaluation_metrics = {
 
 
 with st.form('summarize_form3',clear_on_submit=False):
+
     openai_api_key = st.text_input('OpenAI API Key', type='password')
     summary = st.text_area(label=' please enter the summary for evaluation')
     submitted3 = st.form_submit_button('Submit')
@@ -277,9 +278,12 @@ with st.form('summarize_form3',clear_on_submit=False):
             data = {"Evaluation Type": [], "Summary Type": [], "Score": []}
             for eval_type, (criteria, steps) in evaluation_metrics.items():
                 for summ_type, summary in summary_result.items():
+                    if uploaded_file:  # check if path is not None
+                        reader = PdfReader(uploaded_file)
+                        text = ''.join(page.extract_text() for page in reader.pages)
                     data["Evaluation Type"].append(eval_type)
                     data["Summary Type"].append(summ_type)
-                    response3 = get_geval_score(criteria, steps, summary, eval_type,client = OpenAI(api_key= openai_api_key), text = text )
+                    response3 = get_geval_score(criteria, steps, text,  summary, eval_type,client = OpenAI(api_key= openai_api_key))
                     score_num = int(response3.strip())
                     data["Score"].append(score_num)
             pivot_df = pd.DataFrame(data, index=None).pivot(index="Evaluation Type", columns="Summary Type", values="Score")
