@@ -51,6 +51,7 @@ result = []
 with st.form('summarize_form', clear_on_submit=False):
     anthropic_api_key = st.text_input('ANTHROPIC API KEY', type='password')
     txt_input = st.text_input("summary focused on hypothesis, methodology, results, and conclusions")
+    #summary = st.text_area(label="summary focused on hypothesis, methodology, results, and conclusions")
     submitted = st.form_submit_button('Submit')
     if submitted and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
@@ -65,7 +66,7 @@ with st.form('summarize_form', clear_on_submit=False):
                                         ))
 
              result.append(response)
-             del anthropic_api_key
+             #del anthropic_api_key
 if len(result):
     st.info(response)
 
