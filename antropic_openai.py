@@ -68,7 +68,7 @@ with st.form('summarize_form', clear_on_submit=False):
              result.append(response)
              #del anthropic_api_key
 if len(result):
-    st.write_stream(response)
+    st.write(response)
 
 # result0 = []
 # with st.form('summarize_form0', clear_on_submit=False):
