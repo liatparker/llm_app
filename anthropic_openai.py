@@ -319,7 +319,7 @@ with st.form('summarize_form4',clear_on_submit=False):
                     data["Evaluation Type"].append(eval_type)
                     data["Summary Type"].append(summ_type)
                     response4 = get_geval_score(criteria, steps, text,  summary, eval_type,client = OpenAI(api_key= openai_api_key))
-                    score_num = int(response3.strip())
+                    score_num = int(response4.strip())
                     data["Score"].append(score_num)
             pivot_df = pd.DataFrame(data, index=None).pivot(index="Evaluation Type", columns="Summary Type", values="Score")
 
@@ -347,7 +347,7 @@ with st.form('summarize_form5',clear_on_submit=False):
                     data["Evaluation Type"].append(eval_type)
                     data["Summary Type"].append(summ_type)
                     response5 = get_geval_score(criteria, steps, text,  summary, eval_type,client = OpenAI(api_key= openai_api_key))
-                    score_num = int(response3.strip())
+                    score_num = int(response5.strip())
                     data["Score"].append(score_num)
             pivot_df = pd.DataFrame(data, index=None).pivot(index="Evaluation Type", columns="Summary Type", values="Score")
 
