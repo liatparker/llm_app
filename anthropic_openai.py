@@ -73,7 +73,7 @@ if len(result):
 result0 = []
 with st.form('summarize_form0', clear_on_submit=False):
     txt_input = st.text_input("summary focused on major sections")
-    submitted0 = st.form_submit_button('Submit', clear_on_submit=False)
+    submitted0 = st.form_submit_button('Submit')
     if submitted0 and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
             response0 = get_completion(client=Anthropic(api_key=anthropic_api_key), prompt=(
@@ -91,7 +91,7 @@ if len(result0):
 result1 = []
 with st.form('summarize_form1', clear_on_submit=False):
     txt_input = st.text_input("summary focused on architecture of the model ")
-    submitted1 = st.form_submit_button('Submit', clear_on_submit=False)
+    submitted1 = st.form_submit_button('Submit')
     if submitted1 and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
             response1 = get_completion(client=Anthropic(api_key=anthropic_api_key), prompt=(
@@ -111,7 +111,7 @@ result2 = []
 with st.form('summarize_form2', clear_on_submit=False):
     txt_input = st.text_input(
         'please write your own critiria for a summary or ask anything about the paper you uploaded', key="widget")
-    submitted2 = st.form_submit_button('Submit', clear_on_submit=False)
+    submitted2 = st.form_submit_button('Submit')
     if submitted2 and anthropic_api_key.startswith('sk-'):
         with st.spinner('Calculating...'):
             response2 = get_completion(client=Anthropic(api_key=anthropic_api_key), prompt=(
